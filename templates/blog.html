@@ -4,20 +4,30 @@
     <meta charset="UTF-8">
     <title>My Blog</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" type="text/css" rel="stylesheet">
 </head>
 <body>
-    <h1>My Blog!</h1>
+    <div class="wrapper">
+        <div class="top">
+            <div class="title"><h1>My Blog</h1></div>
+        </div>
+    </div>
 
-    {% if post %}
-        <h2>{{ post.title }}</h2>
-        <h3>{{ post.subtitle }}</h3>
-        <p>{{ post.body }}</p>
-    {% else %}
-        <h3>404! We don't have a blog with this id!</h3>
-    {% endif %}
+    <div class="content">
+        <div class="card">
+            {% if post %}
+                <h2>{{ post.title }}</h2>
+                <h3>{{ post.subtitle }}</h3>
+                <p class="text">{{ post.body }}</p>
+            {% else %}
+                <h3>404! We don't have a blog with this id!</h3>
+            {% endif %}
+            <a href="{{ url_for('index') }}">Go Back..</a>
+        </div>
+    </div>
 
-    <footer>
-      &copy {{ copyright_year }}. Built by Prakhar Srivastava.
-    </footer>
 </body>
+<footer>
+    <p>&copy {{ copyright_year }}. Built by Prakhar Srivastava.</p>
+</footer>
 </html>
