@@ -18,6 +18,11 @@ def index():
                            posts=posts)
 
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
 @app.route("/blog/<int:post_id>")
 def get_blog(post_id):
     # get dummy blogs from npoint
