@@ -42,7 +42,7 @@ def get_blog(post_id):
             break
 
     copyright_year = dt.datetime.now().strftime("%Y")
-    return render_template("blog.html",
+    return render_template("post.html",
                            copyright_year=copyright_year,
                            post=select_post)
 
