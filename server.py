@@ -1,7 +1,7 @@
 import datetime as dt
 
 import requests
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 COPYRIGHT_YEAR = dt.datetime.now().strftime("%Y")
 
@@ -20,10 +20,28 @@ def index():
                            posts=posts)
 
 
-@app.route("/contact")
+@app.route("/contact", methods=['GET', 'POST'])
 def contact():
+    return_message = None
+    if request.method == 'POST':
+        try:
+            name = request.form['name']
+            email = request.form['email']
+            phone = request.form['phone']
+            message = request.form['message']
+            print(name, email, phone, message)
+            return_message = ["success",
+                              "Thanks for your message! I will be in touch as soon as possible."]
+        except:
+            return_message = ["danger",
+                              "Something went wrong! Your message could not be sent."]
+        return render_template("contact.html",
+                               copyright_year=COPYRIGHT_YEAR,
+                               return_message=return_message)
+    # for GET request
     return render_template("contact.html",
-                           copyright_year=COPYRIGHT_YEAR)
+                           copyright_year=COPYRIGHT_YEAR,
+                           return_message=return_message)
 
 
 @app.route("/about")
