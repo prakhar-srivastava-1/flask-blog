@@ -1,7 +1,8 @@
 import datetime as dt
-
+import smtplib
 import requests
 from flask import Flask, render_template, request
+from hidden_secrets import EMAIL, PASSWORD
 
 COPYRIGHT_YEAR = dt.datetime.now().strftime("%Y")
 
@@ -29,7 +30,14 @@ def contact():
             email = request.form['email']
             phone = request.form['phone']
             message = request.form['message']
-            print(name, email, phone, message)
+            email_message = f"Subject: Contact Form Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}"
+            # create smtp connection
+            with smtplib.SMTP("smtp.gmail.com") as connection:
+                connection.starttls()
+                connection.login(user=EMAIL, password=PASSWORD)
+                connection.sendmail(from_addr=EMAIL,
+                                    to_addrs=EMAIL,
+                                    msg=email_message)
             return_message = ["success",
                               "Thanks for your message! I will be in touch as soon as possible."]
         except:
